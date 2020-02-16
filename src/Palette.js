@@ -30,6 +30,7 @@ class Palette extends Component {
         ));
         return (
         <div className="Palette">
+          <div className="slider">
             <Slider 
                 defaultValue={this.state.level} 
                 min={100} 
@@ -37,6 +38,7 @@ class Palette extends Component {
                 step={100}
                 onAfterChange={this.changeLevel}
              />
+          </div>
            {/* Navbar goes here*/}
             <div className="Palette-colours">
             {colourBoxes}
