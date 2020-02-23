@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import ColourBox from './ColourBox.js'
+import NavBar from './NavBar';
+import PaletteFooter from './PaletteFooter';
 import color from '@material-ui/core/colors/amber';
 
 export default class SingleColourPalette extends Component {
@@ -7,9 +9,9 @@ export default class SingleColourPalette extends Component {
         super(props);
         this._shades = this.gatherShades(this.props.palette, this.props.colourId);
         this.state = {
-            shades: [],
-
+            format: "hex",
         };
+        this.changeFormat = this.changeFormat.bind(this);
     }
 
     gatherShades(palette, colourToFilterBy) {
@@ -26,29 +28,38 @@ export default class SingleColourPalette extends Component {
                 allColours[key].filter(colour => colour.id === colourToFilterBy)
             )
         }
-
-        console.log(shades)
         
 
         return shades.slice(1);
     }
 
+    changeFormat(value) {
+        this.setState({
+            format: value
+        })
+    }
+
     render() {
+        const { format } = this.state;
+        const { paletteName, emoji} = this.props.palette;
+   
     
        const colourBoxes = this._shades.map(color => (
             <ColourBox
                 key={color.name}
                 name={color.name}
-                background={color.hex}
+                background={color[format]}
                 showingFullPalette={false}
+                showSlider={false}
             />
             ));
         return (
             <div className="Palette">
-                <h1>Single Colour Component</h1>
+                <NavBar handleChange={this.changeFormat}/>
                 <div className="Palette-colours">
                     {colourBoxes}
                 </div>
+                <PaletteFooter paletteName={paletteName} emoji={emoji}/>
             </div>
         )
     }
