@@ -98,7 +98,7 @@ function generatePalette(starterPalette) {
 
     for(let color of starterPalette.colors) {
         let scale = getScale(color.color, 10).reverse();
-        console.log(scale)
+      
 
         for(let i in scale){
             newPalette.colors[levels[i]].push({
