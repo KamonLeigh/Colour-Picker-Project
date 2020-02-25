@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component, useEffect } from 'react';
 import DraggableColourBox from './DraggableColourBox';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
@@ -13,7 +13,7 @@ import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-
+import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {ChromePicker} from 'react-color'
 import { Button } from '@material-ui/core';
 
@@ -82,8 +82,32 @@ function NewPaletteForm() {
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
-    const [ currentColour, setCurrentColour] = React.useState('teal');
-    const [ colours, setColours] = React.useState(['purple', '#e15764'])
+    const [ currentColour, setCurrentColour] = React.useState('');
+    const [ colours, setColours] = React.useState([{colour:"blue", name:"blue"}]);
+    const [ newName, setNewName] = React.useState('');
+
+    useEffect(() => {
+         ValidatorForm.addValidationRule('isColourNameUnique', (value) => {
+            const result = colours.every(({ name }) => name.toLowerCase() !== value.toLowerCase());
+
+            if (result) {
+                return true;
+            }
+            return false;
+         });
+
+          ValidatorForm.addValidationRule('isColourUnique', (value) => {
+            const result = colours.every(({ colour }) => colour !== currentColour);
+
+            if (result) {
+                return true;
+            }
+            return false;
+         })
+        return () => {
+          
+        };
+    }, [colours, currentColour])
 
     const handleDrawerOpen = () => {
         setOpen(true);
@@ -98,10 +122,19 @@ function NewPaletteForm() {
     };
 
     const addNewColour = () => {
-        const newColours = [...colours, currentColour];
-        setColours(newColours);
+        const newColour = {
+            colour: currentColour,
+            name: newName
+        }
 
-    }
+        const newColours = [...colours, newColour];
+        setColours(newColours);
+        setNewName("");
+    };
+
+    const handleChange = (evt) => {
+        setNewName(evt.target.value)
+    };
         return (
           <div className={classes.root}>
             <CssBaseline />
@@ -154,14 +187,26 @@ function NewPaletteForm() {
                 color={currentColour}
                 onChangeComplete={updateCurrentColour}
               />
-              <Button 
-                variant="contained" 
-                color="primary"
-                style={{ backgroundColor: currentColour}}
-                onClick={addNewColour}
-               >
-                Add Colour
-            </Button>
+              <ValidatorForm onSubmit={addNewColour}>
+                <TextValidator 
+                    value={newName}
+                    onChange={handleChange}
+                    validators={[ "required", "isColourNameUnique", "isColourUnique"]}
+                    errorMessages = {
+                        ["Enter a Colour name", "Colour name must be unique", "Colour already used"]
+                    }
+                />
+                <Button
+                    variant="contained"
+                    type="submiy"
+                    color="primary"
+                    style={{ backgroundColor: currentColour}}
+                 >
+                    Add Colour
+                </Button>
+
+              </ValidatorForm>
+            
             </Drawer>
             <main
               className={clsx(classes.content, {
@@ -170,7 +215,7 @@ function NewPaletteForm() {
             >
               <div className={classes.drawerHeader} />
     
-                {colours.map(colour => (<DraggableColourBox colour={colour}/>))}
+                {colours.map(colour => (<DraggableColourBox colour={colour.colour} name={colour.name}/>))}
               
             </main>
           </div>
