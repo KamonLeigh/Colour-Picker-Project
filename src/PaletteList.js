@@ -13,9 +13,10 @@ class PaletteList extends Component {
         const { palettes, classes } = this.props;
         return (
             <div className={classes.root}>
-                <div classes={classes.container}>
-                    <nav classes={classes.nav}>
-                        <h1 classes={classes.nav} >Colours Palette</h1>
+                <div className={classes.container}>
+                    <nav className={classes.nav}>
+                        <h1>Colours Palette</h1>
+                        <Link to="/palette/new">Create Palette</Link>
                     </nav>
                     <div className={classes.palettes}>
                       {palettes.map(palette => (
