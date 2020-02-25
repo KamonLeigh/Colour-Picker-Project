@@ -40,7 +40,7 @@ class Palette extends Component {
                 id={color.id}
                 paletteId={id}
                 showLink={true}
-                showSlider={true}
+                showingFullPalette={true}
              />
         ));
         return (
