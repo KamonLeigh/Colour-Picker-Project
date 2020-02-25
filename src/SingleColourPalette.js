@@ -51,7 +51,6 @@ export default class SingleColourPalette extends Component {
                 name={color.name}
                 background={color[format]}
                 showingFullPalette={false}
-                showingFullPalette={false}
             />
             ));
         return (
