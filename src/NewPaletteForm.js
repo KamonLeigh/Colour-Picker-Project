@@ -16,6 +16,7 @@ import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {ChromePicker} from 'react-color'
 import { Button } from '@material-ui/core';
+import { useHistory } from 'react-router-dom'
 
 
 const drawerWidth = 400;
@@ -77,14 +78,16 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function NewPaletteForm() {
+function NewPaletteForm(props) {
 
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [ currentColour, setCurrentColour] = React.useState('');
-    const [ colours, setColours] = React.useState([{colour:"blue", name:"blue"}]);
+    const [ colours, setColours] = React.useState([{color:"blue", name:"blue"}]);
     const [ newName, setNewName] = React.useState('');
+
+    const history = useHistory();
 
     useEffect(() => {
          ValidatorForm.addValidationRule('isColourNameUnique', (value) => {
@@ -123,7 +126,7 @@ function NewPaletteForm() {
 
     const addNewColour = () => {
         const newColour = {
-            colour: currentColour,
+            color: currentColour,
             name: newName
         }
 
@@ -135,6 +138,17 @@ function NewPaletteForm() {
     const handleChange = (evt) => {
         setNewName(evt.target.value)
     };
+
+    const handleSubmit = () => {
+       let newName = "New Test Palette";
+       const newPalette = {
+            paletteName: newName, 
+            colors: colours,
+            id: newName.toLowerCase().replace(/ /g,"-")
+        };
+       props.savePalette(newPalette);
+       history.push("/");
+    }
         return (
           <div className={classes.root}>
             <CssBaseline />
@@ -143,6 +157,7 @@ function NewPaletteForm() {
               className={clsx(classes.appBar, {
                 [classes.appBarShift]: open
               })}
+              color="default"
             >
               <Toolbar>
                 <IconButton
@@ -157,6 +172,13 @@ function NewPaletteForm() {
                 <Typography variant="h6" noWrap>
                   Persistent drawer
                 </Typography>
+                <Button
+                    varient="contained"
+                    color="primary"
+                    onClick={handleSubmit}
+                  >
+                    Save Palette
+                </Button>
               </Toolbar>
             </AppBar>
             <Drawer
@@ -215,7 +237,7 @@ function NewPaletteForm() {
             >
               <div className={classes.drawerHeader} />
     
-                {colours.map(colour => (<DraggableColourBox colour={colour.colour} name={colour.name}/>))}
+                {colours.map(colour => (<DraggableColourBox colour={colour.color} name={colour.name}/>))}
               
             </main>
           </div>
