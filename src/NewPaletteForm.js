@@ -1,5 +1,5 @@
 import React, { Component, useEffect } from 'react';
-import DraggableColourBox from './DraggableColourBox';
+import DraggableColourList from './DraggableColourList';
 import clsx from 'clsx';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
@@ -12,11 +12,11 @@ import Divider from '@material-ui/core/Divider';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
-import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import {ChromePicker} from 'react-color'
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
+import { arrayMove } from 'react-sortable-hoc';
 
 
 const drawerWidth = 400;
@@ -170,6 +170,10 @@ function NewPaletteForm({palettes, savePalette }) {
         setColours(newColours);
 
     }
+
+   const onSortEnd = ({oldIndex, newIndex }) => {
+        setColours( c => arrayMove(c, oldIndex, newIndex))
+    }
         return (
           <div className={classes.root}>
             <CssBaseline />
@@ -267,12 +271,12 @@ function NewPaletteForm({palettes, savePalette }) {
             >
               <div className={classes.drawerHeader} />
     
-                {colours.map(colour => (<DraggableColourBox
-                                            key={colour.name}
-                                            colour={colour.color} 
-                                            name={colour.name} 
-                                            handleClick={() => removeColour(colour.name)}
-                                            />))}
+               <DraggableColourList 
+                    colours={colours} 
+                    removeColour={removeColour}
+                    axis='xy'
+                    onSortEnd={onSortEnd}
+                />
               
             </main>
           </div>
