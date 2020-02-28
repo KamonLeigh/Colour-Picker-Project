@@ -78,13 +78,13 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function NewPaletteForm({palettes, savePalette }) {
+function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
 
     const classes = useStyles();
     const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [ currentColour, setCurrentColour] = React.useState('');
-    const [ colours, setColours] = React.useState([{color:"blue", name:"blue"}]);
+    const [ colours, setColours] = React.useState(palettes[0].colors);
     const [ newName, setNewName] = React.useState('');
     const [newPaletteName, setNewPaletteName] = React.useState('');
 
@@ -165,6 +165,18 @@ function NewPaletteForm({palettes, savePalette }) {
        history.push("/");
     }
 
+    const clearColours = () => {
+        setColours([]);
+    }
+
+    const addRandomColour = () => {
+        // Pick colour from existing palette
+        const allColours = palettes.map(p => p.colors).flat();
+        const rand = Math.floor(Math.random() * allColours.length);
+        const randomColour = allColours[rand];
+        setColours(c => [...c, randomColour]);
+    }
+
     const removeColour = (colourName) => {
         const newColours = colours.filter(colour => colour.name !== colourName);
         setColours(newColours);
@@ -174,6 +186,8 @@ function NewPaletteForm({palettes, savePalette }) {
    const onSortEnd = ({oldIndex, newIndex }) => {
         setColours( c => arrayMove(c, oldIndex, newIndex))
     }
+
+
         return (
           <div className={classes.root}>
             <CssBaseline />
@@ -232,10 +246,15 @@ function NewPaletteForm({palettes, savePalette }) {
               <Divider />
               <Typography variant="h4">Design Your Palette</Typography>
               <div>
-                <Button variant="contained" color="secondary">
+                <Button variant="contained" color="secondary" onClick={clearColours}>
                     Clear Palette
                 </Button>
-                <Button variant="contained" color="primary">
+                <Button 
+                    variant="contained" 
+                    color="primary" 
+                    onClick={addRandomColour}
+                    disabled={colours.length >= maxColours}
+                 >
                 Random colour
                 </Button>
               </div>
@@ -256,9 +275,10 @@ function NewPaletteForm({palettes, savePalette }) {
                     variant="contained"
                     type="submit"
                     color="primary"
-                    style={{ backgroundColor: currentColour}}
+                    style={{ backgroundColor: colours.length >= maxColours ? 'grey' : currentColour}}
+                    disabled={colours.length >= maxColours}
                  >
-                    Add Colour
+                 { colours.length >= maxColours ? "Palette Full" : "Add Colour"}
                 </Button>
 
               </ValidatorForm>
