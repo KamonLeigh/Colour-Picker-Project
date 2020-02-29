@@ -149,7 +149,7 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
        const newPalette = {
             paletteName: newPaletteName,
             colors: colours,
-            id: newName.toLowerCase().replace(/ /g,"-")
+            id: newPaletteName.toLowerCase().replace(/ /g,"-")
         };
        savePalette(newPalette);
        history.push("/");
