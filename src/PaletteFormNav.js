@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useState} from 'react';
 import PaletteMetaForm from './PaletteMetaForm';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
@@ -25,6 +25,7 @@ const useStyles = makeStyles(theme =>({
             }),
             flexDirection:'row',
             justifyContent:'space-between',
+            alignItems:'center',
             height:'64px',
         },
         appBarShift: {
@@ -38,13 +39,26 @@ const useStyles = makeStyles(theme =>({
         menuButton: {
             marginRight: theme.spacing(2),
         },
-        navBtns:{}
+        navBtns:{
+            marginRight: '1rem'
+        },
+        button: {
+            margin: '0 0.5rem',
+        },
+        link: {
+            textDecoration: 'none'
+ 
+        }
 }));
 
 function PaletteFormNav({open, palettes, handleSubmit, handleDrawerOpen}) {
     const classes = useStyles();
     const theme = useTheme();
-    
+    const [formShowing, setformShowing] = useState(false);
+
+    const showForm = () => {
+        setformShowing(true);
+    }
 
     return (
         <div className={classes.root}>
@@ -71,19 +85,24 @@ function PaletteFormNav({open, palettes, handleSubmit, handleDrawerOpen}) {
                 </Typography>
               </Toolbar>
                <div className={classes.navBtns}>
-
-                    <PaletteMetaForm 
-                        palettes={palettes}
-                        handleSubmit={handleSubmit}
-                        />
-                    <Link to="/">
+                    <Link to="/" className={classes.link}>
                         <Button 
                             variant="contained" 
                             color="secondary"
+                            className={classes.button}
                         >
                             Go Back
                         </Button>
                     </Link>
+                    <Button 
+                        variant="contained" 
+                        color="primary" 
+                        onClick={showForm}
+                        className={classes.button}
+                        >
+                        Save
+                    </Button>
+                   {formShowing && <PaletteMetaForm  palettes={palettes} handleSubmit={handleSubmit} /> }
                 </div>  
             </AppBar>
         </div>
