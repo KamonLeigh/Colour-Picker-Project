@@ -36,6 +36,8 @@ const useStyles = makeStyles(theme => ({
     },
     drawerPaper: {
         width: drawerWidth,
+        display:'flex',
+        alignItems:'center'
     },
     drawerHeader: {
         display: 'flex',
@@ -61,6 +63,20 @@ const useStyles = makeStyles(theme => ({
         }),
         marginLeft: 0,
     },
+    container: {
+        width:"90%",
+        height:'100%',
+        display:'flex',
+        flexDirection:'column',
+        justifyContent:'center',
+        alignItems:'center'
+    },
+    buttons: {
+        width: '100%',
+    },
+    button: {
+        width: '50%'
+    }
 }));
 
 function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
@@ -145,9 +161,15 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
                 </IconButton>
               </div>
               <Divider />
-              <Typography variant="h4">Design Your Palette</Typography>
-              <div>
-                <Button variant="contained" color="secondary" onClick={clearColours}>
+              <div className={classes.container}>
+              <Typography variant="h4" gutterBottom>Design Your Palette</Typography>
+              <div className={classes.buttons}>
+                <Button 
+                    variant="contained" 
+                    color="secondary" 
+                    onClick={clearColours}
+                    className={classes.button}
+                   >
                     Clear Palette
                 </Button>
                 <Button 
@@ -155,6 +177,7 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
                     color="primary" 
                     onClick={addRandomColour}
                     disabled={colours.length >= maxColours}
+                    className={classes.button}
                  >
                 Random colour
                 </Button>
@@ -164,6 +187,7 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
                 addNewColour={addNewColour}
                 colours={colours}
               />
+              </div>
             </Drawer>
             <main
               className={clsx(classes.content, {
