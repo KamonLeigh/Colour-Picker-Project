@@ -104,11 +104,12 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
     };
 
 
-    const handleSubmit = (newPaletteName) => {
+    const handleSubmit = ({paletteName, emoji}) => {
        const newPalette = {
-            paletteName: newPaletteName,
+            paletteName,
             colors: colours,
-            id: newPaletteName.toLowerCase().replace(/ /g,"-")
+            id: paletteName.toLowerCase().replace(/ /g,"-"),
+            emoji,
         };
        savePalette(newPalette);
        history.push("/");

@@ -12,7 +12,7 @@ import 'emoji-mart/css/emoji-mart.css';
 
 
 function PaletteMetaForm({palettes, handleSubmit, hideForm}) {
-    const [open, setOpen] = React.useState(true);
+    const [stage, setStage] = React.useState('form');
     const [newPaletteName, setNewPaletteName] = React.useState('');
 
 
@@ -36,24 +36,28 @@ function PaletteMetaForm({palettes, handleSubmit, hideForm}) {
 
     }, [palettes])
 
-    const handleClickOpen = () => {
-        setOpen(true);
+    const showEmojiPicker = () => {
+      setStage('emoji');
     };
 
-    const handleClose = () => {
-        setOpen(false);
-    };
+    const savePalette = (emoji) => {
+      handleSubmit({paletteName: newPaletteName, emoji: emoji.native});
+
+    }
 
     return (
-   
-      <Dialog open={open} onClose={hideForm} aria-labelledby="form-dialog-title">
+    <div>
+      <Dialog open={stage === 'emoji'} onClose={hideForm}>
+        <DialogTitle id="form-dialog-title">Choose a Palette Emoji</DialogTitle>
+        <Picker title="Pick a Palette Emoji" onSelect={savePalette}/>
+      </Dialog>
+      <Dialog open={stage === 'form'} onClose={hideForm} aria-labelledby="form-dialog-title">
         <DialogTitle id="form-dialog-title">Create a Palette Name</DialogTitle>
-        <ValidatorForm onSubmit={() => handleSubmit(newPaletteName)}>
+        <ValidatorForm onSubmit={showEmojiPicker}>
         <DialogContent>
           <DialogContentText>
            Please enter a name for your new beautiful palette. Make sure it's unique
           </DialogContentText>
-            <Picker/>
             <TextValidator
                 label="palette name"
                 value={newPaletteName}
@@ -78,7 +82,7 @@ function PaletteMetaForm({palettes, handleSubmit, hideForm}) {
         </DialogActions>
         </ValidatorForm>
       </Dialog>
-            
+    </div>      
     )
 }
 
