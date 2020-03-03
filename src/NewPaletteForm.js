@@ -2,9 +2,10 @@ import React from 'react';
 import PaletteFormNav from './PaletteFormNav';
 import ColourPickerForm from './ColourPickerForm'
 import DraggableColourList from './DraggableColourList';
+import useStyles from './styles/NewPaletteFormStyles';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
@@ -20,64 +21,8 @@ import { useHistory } from 'react-router-dom'
 import { arrayMove } from 'react-sortable-hoc';
 
 
-const drawerWidth = 400;
 
-const useStyles = makeStyles(theme => ({
-    root: {
-        display: 'flex',
-    },
-    
-    hide: {
-        display: 'none',
-    },
-    drawer: {
-        width: drawerWidth,
-        flexShrink: 0,
-    },
-    drawerPaper: {
-        width: drawerWidth,
-        display:'flex',
-        alignItems:'center'
-    },
-    drawerHeader: {
-        display: 'flex',
-        alignItems: 'center',
-        padding: theme.spacing(0, 1),
-        ...theme.mixins.toolbar,
-        justifyContent: 'flex-end',
-    },
-    content: {
-        flexGrow: 1,
-        padding: theme.spacing(3),
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.sharp,
-            duration: theme.transitions.duration.leavingScreen,
-        }),
-        height:"calc(100vh - 64px)",
-        marginLeft: -drawerWidth,
-    },
-    contentShift: {
-        transition: theme.transitions.create('margin', {
-            easing: theme.transitions.easing.easeOut,
-            duration: theme.transitions.duration.enteringScreen,
-        }),
-        marginLeft: 0,
-    },
-    container: {
-        width:"90%",
-        height:'100%',
-        display:'flex',
-        flexDirection:'column',
-        justifyContent:'center',
-        alignItems:'center'
-    },
-    buttons: {
-        width: '100%',
-    },
-    button: {
-        width: '50%'
-    }
-}));
+
 
 function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
 

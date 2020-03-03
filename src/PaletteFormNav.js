@@ -53,6 +53,7 @@ const useStyles = makeStyles(theme =>({
 
 function PaletteFormNav({open, palettes, handleSubmit, handleDrawerOpen}) {
     const classes = useStyles();
+    console.log(classes);
     const theme = useTheme();
     const [formShowing, setformShowing] = useState(false);
 
