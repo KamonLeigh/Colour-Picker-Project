@@ -27,6 +27,10 @@ function App() {
     })
   }
 
+  function removePalette(id) {
+    setSeedColours( prevState => prevState.filter(palette => palette.id !== id));
+  }
+
   function savePalette(newPalette) {
     setSeedColours([...seedColours, newPalette]);
   
@@ -35,7 +39,7 @@ function App() {
   return (
     <Switch>
       <Route exact path="/palette/new" render={() => <NewPaletteForm savePalette={savePalette} palettes={seedColours}/>}/>
-      <Route exact path="/" render={(renderProps) => <PaletteList palettes={seedColours} {...renderProps}/>} />
+      <Route exact path="/" render={(renderProps) => <PaletteList palettes={seedColours} {...renderProps} removePalette={removePalette}/>} />
       <Route 
        exact
        path="/palette/:id" 
