@@ -147,6 +147,7 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
                     removeColour={removeColour}
                     axis='xy'
                     onSortEnd={onSortEnd}
+                    distance={20}
                 />
               
             </main>
