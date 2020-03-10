@@ -4,10 +4,10 @@ import Page from './Page';
 import SingleColourPalette from './SingleColourPalette';
 import Palette from './Palette';
 import NewPaletteForm from './NewPaletteForm';
+import {TransitionGroup, CSSTransition} from 'react-transition-group';
 import {Route, Switch } from 'react-router-dom'
 import seed from './seedColours'
 import { generatePalette } from './colourHelpers';
-import {TransitionGroup, CSSTransition} from 'react-transition-group';
 
 
 

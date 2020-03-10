@@ -3,18 +3,11 @@ import PaletteFormNav from './PaletteFormNav';
 import ColourPickerForm from './ColourPickerForm'
 import DraggableColourList from './DraggableColourList';
 import useStyles from './styles/NewPaletteFormStyles';
-import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { useTheme } from '@material-ui/core/styles';
 import Drawer from '@material-ui/core/Drawer';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import List from '@material-ui/core/List';
 import Typography from '@material-ui/core/Typography';
 import Divider from '@material-ui/core/Divider';
-import IconButton from '@material-ui/core/IconButton';
-import MenuIcon from '@material-ui/icons/Menu';
+import IconButton from '@material-ui/core/IconButton'
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
@@ -27,7 +20,6 @@ import { arrayMove } from 'react-sortable-hoc';
 function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
 
     const classes = useStyles();
-    const theme = useTheme();
     const [open, setOpen] = React.useState(false);
     const [ colours, setColours] = React.useState(palettes[0].colors);
    

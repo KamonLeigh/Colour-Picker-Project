@@ -3,9 +3,6 @@ import MiniPalette from './MiniPalette';
 import { CSSTransition, TransitionGroup} from "react-transition-group"
 import { withStyles } from '@material-ui/styles';
 import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
 import List from '@material-ui/core/List';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import ListItem from '@material-ui/core/ListItem';
@@ -53,8 +50,8 @@ class PaletteList extends Component {
         this.closeDialog();
     }
     render() {
-        const { palettes, classes, removePalette } = this.props;
-        const { openDeleteDialog, deleteId } = this.state;
+        const { palettes, classes, } = this.props;
+        const { openDeleteDialog } = this.state;
         return (
           <div className={classes.root}>
             <div className={classes.container}>

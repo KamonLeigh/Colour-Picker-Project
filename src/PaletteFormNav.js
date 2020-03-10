@@ -2,14 +2,13 @@ import React, { useState} from 'react';
 import PaletteMetaForm from './PaletteMetaForm';
 import { Link } from 'react-router-dom';
 import clsx from 'clsx';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import IconButton from '@material-ui/core/IconButton';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import MenuIcon from '@material-ui/icons/Menu';
-import {ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 import { Button } from '@material-ui/core';
 
 const drawerWidth = 400;
@@ -53,8 +52,6 @@ const useStyles = makeStyles(theme =>({
 
 function PaletteFormNav({open, palettes, handleSubmit, handleDrawerOpen}) {
     const classes = useStyles();
-    console.log(classes);
-    const theme = useTheme();
     const [formShowing, setformShowing] = useState(false);
 
     const showForm = () => {
