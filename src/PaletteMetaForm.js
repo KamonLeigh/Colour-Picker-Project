@@ -42,7 +42,7 @@ function PaletteMetaForm({palettes, handleSubmit, hideForm}) {
 
     const savePalette = (emoji) => {
       handleSubmit({paletteName: newPaletteName, emoji: emoji.native});
-
+      setStage("");
     }
 
     return (
