@@ -92,6 +92,17 @@ function App() {
                </Page>
               } 
               />
+              <Route 
+                render={(renderProps) => 
+                  <Page>
+                    <PaletteList 
+                      palettes={seedColours} 
+                      {...renderProps} 
+                      removePalette={removePalette}
+                    />
+                 </Page>
+                }/>
+            <Route/> 
            </Switch>
           </CSSTransition>
      </TransitionGroup>
