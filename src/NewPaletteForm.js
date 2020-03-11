@@ -12,6 +12,7 @@ import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import { Button } from '@material-ui/core';
 import { useHistory } from 'react-router-dom'
 import { arrayMove } from 'react-sortable-hoc';
+import seed from './seedColours'
 
 
 
@@ -21,7 +22,7 @@ function NewPaletteForm({palettes, savePalette, maxColours = 20 }) {
 
     const classes = useStyles();
     const [open, setOpen] = React.useState(false);
-    const [ colours, setColours] = React.useState(palettes[0].colors);
+    const [ colours, setColours] = React.useState(seed[0].colors);
    
 
     const history = useHistory();
